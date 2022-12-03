@@ -45,6 +45,11 @@ class Book(models.Model):
 
         return reverse('book-detail', args=[str(self.id)])
 
+    def display_genre(self):
+        return ''.join([genre.name for genre in self.genre.all()])
+
+    display_genre.short_description = 'GENRE'
+
 
 class Language(models.Model):
     CHOICE_LAN = [
@@ -52,6 +57,9 @@ class Language(models.Model):
         ('CN', 'Chinese'),
     ]
     language = models.CharField(choices=CHOICE_LAN, default='EN', blank=True, max_length=20)
+
+    def __str__(self):
+        return self.language
 
 
 class BookInstance(models.Model):
