@@ -1,3 +1,23 @@
+from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Book, BookInstance, Author,Genre
+
 
 # Create your views here.
+def index(request):
+    book_num = Book.objects.count()
+    num_instances = BookInstance.objects.count()
+    authors = Author.objects.count()
+    num_instances_available = BookInstance.objects.filter(status__exact='a').count()
+    num_genre=Genre.objects.count()
+    num_power_book=Book.objects.filter(title__icontains='Power').count()
+    context = {
+        'num_books': book_num,
+        'num_instances': num_instances,
+        'num_instances_available': num_instances_available,
+        'num_authors': authors,
+        'num_genre':num_genre,
+        'num_power_book':num_power_book,
+
+    }
+    return render(request, 'index.html', context)
