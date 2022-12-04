@@ -1,0 +1,9 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+<p> Author List</p>
+{% if author_list %}
+  {% for author in author_list %}
+<li ><a href="{% url 'author_detail' author.id%}">{{author.first_name}} {{author.last_name}}</a></li>
+  {% endfor %}
+{% endif %}
+{% endblock %}
