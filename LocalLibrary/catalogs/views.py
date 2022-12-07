@@ -31,24 +31,35 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-class BookListView(LoginRequiredMixin,generic.ListView):
+class BookListView(LoginRequiredMixin, generic.ListView):
     model = Book
     context_object_name = 'book_list'
     queryset = Book.objects.all()
     template_name = 'book_list.html'
 
 
-class BookDetailView(LoginRequiredMixin,generic.DetailView):
+class BookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Book
     template_name = 'book_detail.html'
 
 
-class AuthorListView(LoginRequiredMixin,generic.ListView):
+class AuthorListView(LoginRequiredMixin, generic.ListView):
     model = Author
     queryset = Author.objects.all()
     template_name = 'author_list.html'
 
 
-class AuthorDetailView(LoginRequiredMixin,generic.DetailView):
+class AuthorDetailView(LoginRequiredMixin, generic.DetailView):
     model = Author
     template_name = 'author_detail.html'
+
+
+class LoanedBookByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    template_name = 'bookinstance_list_borrowed_user.html'
+
+    def get_queryset(self):
+        return BookInstance.objects.\
+            filter(borrower=self.request.user).\
+            filter(status__exact='o').\
+            order_by('due_back')
