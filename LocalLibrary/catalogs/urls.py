@@ -7,7 +7,8 @@ from .views import (
     BookDetailView,
     AuthorListView,
     AuthorDetailView,
-    LoanedBookByUserListView
+    LoanedBookByUserListView,
+    AllLoanedBookForAdminListView,
 )
 
 urlpatterns = [
@@ -17,4 +18,5 @@ urlpatterns = [
     path('authors/', AuthorListView.as_view(), name='authors'),
     path('author/<int:pk>/', AuthorDetailView.as_view(), name='author_detail'),
     path('mybooks/', LoanedBookByUserListView.as_view(), name='my-borrowed'),
+    path('allbooks/',AllLoanedBookForAdminListView.as_view(), name='all-borrowed'),
 ]

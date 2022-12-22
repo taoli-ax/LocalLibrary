@@ -91,6 +91,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ['due_back']
+        permissions =(('can_mark_as_returned', 'set_book_as_returned'),)
 
     def __str__(self):
         return '%s (%s)' % (self.id, self.book.title)

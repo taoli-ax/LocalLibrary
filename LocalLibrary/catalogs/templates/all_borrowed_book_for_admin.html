@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+{%block content%}
+<h1>All Borrowed Books</h1>
+
+{% if perms.catalogs.can_mark_as_returned%}
+<span>You can mark as returned</span>
+{%endif%}
+
+{% if bookinstance_list %}
+    {%for instance in bookinstance_list%}
+    <ul>
+        <li>{{instance.book.title}} {{instance.borrower}}</li>
+    </ul>
+
+    {%endfor%}
+{%else%}
+
+{% endif %}
+{% endblock %}
