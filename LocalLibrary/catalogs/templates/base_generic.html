@@ -29,7 +29,11 @@
 
            {% if user.is_authenticated %}
      <li>User: {{ user.get_username }}</li>
+     {% if perms.catalogs.can_mark_as_returned %}
+     <li><a href="{% url 'all-borrowed' %}">All Borrowed</a></li>{% else %}
+
      <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
+          {% endif %}
      <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
 
    {% else %}

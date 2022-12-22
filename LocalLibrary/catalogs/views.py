@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Book, BookInstance, Author, Genre
@@ -59,7 +59,16 @@ class LoanedBookByUserListView(LoginRequiredMixin, generic.ListView):
     template_name = 'bookinstance_list_borrowed_user.html'
 
     def get_queryset(self):
-        return BookInstance.objects.\
-            filter(borrower=self.request.user).\
-            filter(status__exact='o').\
+        return BookInstance.objects. \
+            filter(borrower=self.request.user). \
+            filter(status__exact='o'). \
             order_by('due_back')
+
+
+class AllLoanedBookForAdminListView(generic.ListView, PermissionRequiredMixin,LoginRequiredMixin):
+    model = BookInstance
+    permission_required = 'catalogs.can_mark_as_returned'
+    template_name = 'all_borrowed_book_for_admin.html'
+
+    def get_queryset(self):
+        return BookInstance.objects.all().order_by('due_back')
