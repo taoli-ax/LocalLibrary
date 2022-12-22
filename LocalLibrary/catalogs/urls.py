@@ -9,6 +9,10 @@ from .views import (
     AuthorDetailView,
     LoanedBookByUserListView,
     AllLoanedBookForAdminListView,
+    renew_book_librarian,
+    AuthorCreate,
+    AuthorUpdate,
+    AuthorDelete,
 )
 
 urlpatterns = [
@@ -19,4 +23,8 @@ urlpatterns = [
     path('author/<int:pk>/', AuthorDetailView.as_view(), name='author_detail'),
     path('mybooks/', LoanedBookByUserListView.as_view(), name='my-borrowed'),
     path('allbooks/',AllLoanedBookForAdminListView.as_view(), name='all-borrowed'),
+    path('book/<uuid:pk>/renew/', renew_book_librarian, name='renew-book-librarian'),
+    path('author/create/', AuthorCreate.as_view(), name='author_create'),
+    path('author/<int:pk>/update/', AuthorUpdate.as_view(), name='author_update'),
+    path('author/<int:pk>/delete/', AuthorDelete.as_view(), name='author_delete'),
 ]
